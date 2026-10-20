@@ -1,0 +1,24 @@
+import { Router } from 'express';
+import { asyncHandler } from '../lib/http.js';
+import { supabaseAdmin } from '../lib/supabase.js';
+const router = Router();
+const today = () => { const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()); const values = Object.fromEntries(parts.map(p => [p.type, p.value])); return `${values.year}-${values.month}-${values.day}`; };
+router.get('/summary', asyncHandler(async (req, res) => {
+  const user = req.user!; let leadQuery = supabaseAdmin.from('leads').select('id,sales_stage,call_outcome,next_follow_up_at', { count: 'exact' });
+  if (user.role !== 'admin') leadQuery = leadQuery.eq('assigned_to', user.id);
+  const { data: leads, error } = await leadQuery;
+  if (error) throw error;
+  const all = leads || []; const start = `${today()}T00:00:00.000+05:30`; const end = `${today()}T23:59:59.999+05:30`;
+  let activityQuery = supabaseAdmin.from('lead_activities').select('id,call_outcome,call_datetime,lead_id').gte('call_datetime', start).lte('call_datetime', end);
+  if (user.role !== 'admin') activityQuery = activityQuery.eq('created_by', user.id);
+  const { data: activities, error: activityError } = await activityQuery;
+  if (activityError) throw activityError;
+  let followQuery = supabaseAdmin.from('follow_ups').select('id,due_at,status,assigned_to').eq('status','pending');
+  if (user.role !== 'admin') followQuery = followQuery.eq('assigned_to', user.id);
+  const { data: followups, error: followError } = await followQuery;
+  if (followError) throw followError;
+  const pending = followups || []; const now = new Date().toISOString();
+  const { count: callbacks } = await supabaseAdmin.from('leads').select('id',{count:'exact',head:true}).eq('sales_stage','Admin Callback');
+  res.json({ totalLeads: all.length, callsToday: activities?.length || 0, connected: all.filter(l => l.call_outcome === 'Connected').length, dueToday: pending.filter(f => f.due_at.slice(0,10) === today()).length, overdue: pending.filter(f => f.due_at < now).length, callbacks: user.role === 'admin' ? callbacks || 0 : 0, won: all.filter(l => l.sales_stage === 'Won').length });
+}));
+export default router;
