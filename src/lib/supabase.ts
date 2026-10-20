@@ -1,5 +1,5 @@
+
 import { createClient } from '@supabase/supabase-js';
-import WebSocket from 'ws';
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
@@ -9,22 +9,14 @@ if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {
   throw new Error('Missing Supabase environment variables');
 }
 
-const options = {
-  realtime: {
-    transport: WebSocket,
-  },
-};
-
 export const supabaseAuth = createClient(
   supabaseUrl,
-  supabaseAnonKey,
-  options
+  supabaseAnonKey
 );
 
 export const supabaseAdmin = createClient(
   supabaseUrl,
-  supabaseServiceRoleKey,
-  options
+  supabaseServiceRoleKey
 );
 
 export const supabase = supabaseAdmin;
