@@ -1,0 +1,1 @@
+This file is a placeholder to ensure the client directory is tracked by source control. It can be removed after setup.
