@@ -13,6 +13,7 @@ import followupRoutes from './routes/followups.js';
 import userRoutes from './routes/users.js';
 import callLogRoutes from './routes/callLogs.js';
 import telecallerRoutes from './routes/telecallers.js';
+import transferRoutes from './routes/transfers.js';
 
 const app=express();
 const allowedOrigins=(process.env.CLIENT_ORIGIN||'http://localhost:5173').split(',').map(s=>s.trim());
@@ -32,6 +33,7 @@ app.use('/api/users',userRoutes);
 app.use('/api/notifications',asyncHandler(async(_req,res)=>res.json({items:[]})));
 app.use('/api/telecallers', authenticate, telecallerRoutes);
 app.use('/api/call-logs', callLogRoutes);
+app.use('/api/transfers', transferRoutes);
 app.use((_req,res)=>res.status(404).json({error:'Endpoint not found.'}));
 app.use((err:unknown,_req:express.Request,res:express.Response,_next:express.NextFunction)=>{const message=err instanceof Error?err.message:'Unexpected server error';console.error(err);res.status(500).json({error:process.env.NODE_ENV==='production'?'Unexpected server error.':message});});
 const port=Number(process.env.PORT)||4000;
