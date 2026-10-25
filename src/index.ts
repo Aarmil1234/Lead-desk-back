@@ -16,7 +16,6 @@ import telecallerRoutes from './routes/telecallers.js';
 import transferRoutes from './routes/transfers.js';
 
 const app=express();
-const allowedOrigins=(process.env.CLIENT_ORIGIN||'http://localhost:5173').split(',').map(s=>s.trim());
 app.disable('x-powered-by');
 app.use(helmet());
 const allowedOrigins = [
