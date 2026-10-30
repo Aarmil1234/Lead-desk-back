@@ -2,16 +2,29 @@
 # Dependencies
 node_modules/
 
+<<<<<<< HEAD
+=======
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+>>>>>>> 7355356bb517c12d8248c15275461a59f7eb1c4f
 # Build output
 dist/
 build/
 
+<<<<<<< HEAD
 # Environment variables
 .env
 .env.*
 !.env.example
 
 # Logs
+=======
+# Logs
+logs/
+>>>>>>> 7355356bb517c12d8248c15275461a59f7eb1c4f
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -19,12 +32,22 @@ pnpm-debug.log*
 
 # Testing
 coverage/
+<<<<<<< HEAD
+=======
+.nyc_output/
+>>>>>>> 7355356bb517c12d8248c15275461a59f7eb1c4f
 
 # TypeScript
 *.tsbuildinfo
 
+<<<<<<< HEAD
 # Vite
 .vite/
+=======
+# Runtime files
+*.pid
+*.pid.lock
+>>>>>>> 7355356bb517c12d8248c15275461a59f7eb1c4f
 
 # Editor
 .vscode/
@@ -33,3 +56,10 @@ coverage/
 # OS files
 .DS_Store
 Thumbs.db
+<<<<<<< HEAD
+=======
+
+# Temporary files
+tmp/
+temp/
+>>>>>>> 7355356bb517c12d8248c15275461a59f7eb1c4f

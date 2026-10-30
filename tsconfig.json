@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
   "compilerOptions": { "target": "ES2020", "useDefineForClassFields": true, "lib": ["ES2020", "DOM", "DOM.Iterable"], "module": "ESNext", "skipLibCheck": true, "moduleResolution": "Bundler", "allowImportingTsExtensions": true, "resolveJsonModule": true, "isolatedModules": true, "noEmit": true, "jsx": "react-jsx", "strict": true, "noUnusedLocals": false, "noUnusedParameters": false },
   "include": ["src"]
+=======
+  "compilerOptions": { "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext", "outDir": "dist", "rootDir": "src", "strict": true, "esModuleInterop": true, "skipLibCheck": true, "forceConsistentCasingInFileNames": true, "resolveJsonModule": true },
+  "include": ["src/**/*.ts"]
+>>>>>>> 7355356bb517c12d8248c15275461a59f7eb1c4f
 }
